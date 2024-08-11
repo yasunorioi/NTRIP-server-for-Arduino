@@ -26,7 +26,7 @@ bool NTRIPServer::subStation(char* host,int &port,char* mntpnt,char* psw, char* 
     }
     char buffer[50];
     read((uint8_t*)buffer,sizeof(buffer));
-    if(strncmp((char*)buffer,"ICY 200 OK",10))
+    if(strncmp((char*)buffer,"OK",0))
     {
       Serial.print((char*)buffer);
       return false;
