@@ -1,25 +1,29 @@
-#pragma GCC optimize("O3")
+//#pragma GCC optimize("O3")
 //#include <ESP8266WiFi.h>  //Need for ESP8266
 #include <WiFi.h>           //Need for ESP32 
-#include<HardwareSerial.h>
+//#include<HardwareSerial.h>
+#include <M5Atom.h>
+#define FASTLED_ESP32_SPI_BUS HSPI
 #include "NTRIPServer.h"
 
-const char* ssid     = "your_ssid";
-const char* password = "your_password";
+const char* ssid     = "ssid";
+const char* password = "pass";
 
 //Sample (use rtk2go.com(ntrip softwere test server))
 char* host = "rtk2go.com";    //ntrip caster host address 
 int httpPort = 2101;          //port 2101 is default port of NTRIP caster
-char* mntpnt = "mountpoint";  //must change this string
-char* psw   = "BETATEST";     //enter password of ntrip caster for subscribing
+char* mntpnt = "";  //must change this string
+char* psw   = "";     //enter password of ntrip caster for subscribing
 char* srcSTR   = "";          //source table infomation string reference software.rtcm-ntrip.org/wiki : NTRIP sourcetable contents (https://software.rtcm-ntrip.org/wiki/Sourcetable)
 NTRIPServer ntrip_s;
 
 void setup() {
   // put your setup code here, to run once:
-
+  M5.begin(true, false, true);
+  pinMode(0,OUTPUT);
+  digitalWrite(0,LOW);
   Serial.begin(115200);
-  Serial2.begin(115200);
+  Serial2.begin(115200,SERIAL_8N1,26,32);
   //Serial2.begin(115200, SERIAL_8N1, 17, 16);
   delay(10);
   
@@ -38,7 +42,7 @@ void setup() {
     delay(15000);
     ESP.restart();
   }
-  Serial.println("Subscribing MountPoint is OK");
+  Serial.println("Subscribing MountPoint is OK1");
 }
 
 char ch[512];
